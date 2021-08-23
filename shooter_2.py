@@ -12,7 +12,7 @@ height = 500
 fps= 60
 mov= 5
 lavel = 1
-health=100
+health_1=100
 max_bullet=6
 enmy_move= 3 
 val= enmy_move
@@ -93,10 +93,10 @@ def ship_move(key_press,rect_1):
 
 
 #display update 
-def display_update(rect_1,bullet_count):
+def display_update(rect_1,bullet_count,health_1,lavel):
     WIN.blit(background_1,(0,0))
     labe=main_font.render(f"Game level:{lavel}",1,white)
-    labe1=main_font.render(f"player health:{health}",1,white)
+    labe1=main_font.render(f"player health:{health_1}",1,white)
     WIN.blit(labe,(10,10))
     WIN.blit(labe1,(110,10))
     WIN.blit(ship_1,(rect_1.x,rect_1.y))
@@ -176,7 +176,7 @@ def main():
     wave_enm =20
     lavel=1
     rect_1=pygame.Rect(0,400 , ship_weidth , ship_hight )
-
+    health_1 =100
     
 
 
@@ -209,12 +209,14 @@ def main():
         bullet_move(bullet_count)
         key_press=pygame.key.get_pressed()
         ship_move(key_press,rect_1)
-        for entry in enemy_count:
+        for entry in enemy_count[:]:
             entry.emove_x(val)
             if entry.x <=0 :
+                health_1 -= 10
                 enemy_count.remove(entry)
+                
 
-        display_update(rect_1,bullet_count)
+        display_update(rect_1,bullet_count,health_1,lavel)
 
 main()  
 
