@@ -14,17 +14,14 @@ mov= 5
 lavel = 1
 health_1=100
 max_bullet=6
-enmy_move= 3 
+enmy_move= 2
 val= enmy_move
 enemy_count =[]
 wave_enm= 20
-
-
-
+bullet_1_dmg= 25
+bullet_2_dmg= 50
 ship_hight= 70
-ship_weidth = 70 
-
-
+ship_weidth = 70
 bullet_colour=(230,230,250)
 white=(255,255,255)
 
@@ -120,9 +117,27 @@ def bullet_move(bullet_count):
         if bullets.x > height:
             bullet_count.remove(bullets)
 
+def collision(self,obj1, obj2):
+        offset_x= obj2.x - obj1.x
+        offset_y= obj2.x - obj1.x
+        return obj.mask.overlap(obj2.mask,(offset_x,offset_y)) != None
+        
 
+class Laser:
+    def __init__(self,x,y,img):
+        self.x=x
+        self.y=y
+        self.img=img
+        self.mask=pygame.mask.from_surface(self.img)
+    
+    def move(self, val):
+        self.x -= val*2 
+    def draw(self,window):
+        window.blit(self.img,(self.x,self.y))
 
-
+    
+    def collide(self,obj):
+        return collision(obj, self)
 
 
 class ship():
@@ -134,9 +149,18 @@ class ship():
         self.lasers=[]
         self.health=health
         self.cool=0
+    def cooldown(self):
+        if self.cool >= 30:
+            self.cool=0
+        elif self.cool > 0:
+            self.cool+=1
 
+    def shoot(self):
+        if self.cool ==0:
+            laser=Laser(self.x, self.y,bullet_1)
+            self.lasers.append(laser)
+            self.cool=1 
 
-        
     def drow_ship(self,window):
         window.blit(self.ship_image, (self.x, self.y))
 
@@ -159,7 +183,7 @@ class Enmy(ship):
         super().__init__(x,y,health)
         self.ship_image , self.ship_lz_image = self.chos_ship[type]
 
-
+   
 
     def emove_x(self, val):
         self.x -= val
