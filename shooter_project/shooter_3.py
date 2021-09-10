@@ -20,6 +20,8 @@ pygame.init()
 clock=pygame.time.Clock()
 from satting import Settings 
 from ship import Ship
+from bullets import Bullet 
+
 
 
 
@@ -31,13 +33,18 @@ class Game():
         pygame.display.set_caption("Alian invator")
                   #allow to acces screen right lefe top and bollom etc
         self.ship= Ship(self)
+        self.bullets= pygame.sprite.Group()
     def main(self):
-        #main while loo p
+        #main while loop
         
         while True: 
             #chack event 
             self._event()
-            self.ship.ship_move()     
+            self.ship.ship_move()  
+            self.bullets.update()  
+            for Bullet in self.bullets.copy():
+                if Bullet.rect.bottom < 0 :
+                    self.bullets.remove(Bullet)
             self._update_display()
             
 
@@ -49,6 +56,10 @@ class Game():
     def _update_display(self):
         self.screen.fill(self.settings.black)
         self.ship.blit_me()
+        for bullet in self.bullets.sprites():
+            bullet.draw_bullet()
+
+           
         pygame.display.flip()
 
     #chak event
@@ -59,9 +70,12 @@ class Game():
             elif event.type == pygame.KEYDOWN :
                 
                self.key_down(event)
+               self.fire_bullets(event)
 
             elif event.type == pygame.KEYUP:
                 self.key_up(event)
+
+            
                 
                 
 
@@ -82,9 +96,11 @@ class Game():
         elif event.key == pygame.K_d:
             self.ship.right=True
 
-        
-
-
+    def fire_bullets(self,event):
+        if event.key== pygame.K_SPACE:
+            if len(self.bullets)< self.settings.bullet_limit :
+                new_bullets= Bullet(self)
+                self.bullets.add(new_bullets)
 
 
 if __name__ == '__main__':
