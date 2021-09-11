@@ -123,15 +123,25 @@ class Game():
 
     def create_fleet(self):
         alien= Alien(self)
-        alien_width=alien.rect.width
+        alien_width , alien_height=alien.rect.size
         avilable_space_x= self.settings.width -(2*alien_width)
         number_of_alian= avilable_space_x//(2*alien_width)
-
-        for alien in range(number_of_alian+4):
-            new_alien= Alien(self)
-            new_alien.rect.x= alien_width+2 *alien_width *alien
-            self.alien.add(new_alien)
-            print(new_alien)
+        Ship_height= self.ship.image_rect.height
+        avilable_space_y = self.settings.height - (3* alien_height)- Ship_height
+        number_row= avilable_space_y //(2*alien_height)
+        
+        for row_number in range(number_row-5):
+            for alien in range(number_of_alian+4):
+                self.row(alien,alien_width,row_number)
+            
+            # print(new_alien)
+    def row(self,alien,alien_width,row_number):
+        new_alien= Alien(self)
+        alien_width , alien_height=new_alien.rect.size
+        new_alien.rect.x= alien_width+2 *alien_width *alien
+        new_alien.rect.y= new_alien.rect.height + 2*alien_height* row_number
+        self.alien.add(new_alien)
+            
 
 if __name__ == '__main__':
     A= Game()
