@@ -116,14 +116,22 @@ class Game():
 
     def fire_bullets(self,event):
         if event.key== pygame.K_SPACE:
-            if len(self.bullets)< self.settings.bullet_limit :
+            if len(self.bullets) < self.settings.bullet_limit :
                 new_bullets= Bullet(self)
                 self.bullets.add(new_bullets)
 
 
     def create_fleet(self):
-        new_alien= Alien(self)
-        self.alien.add(new_alien)
+        alien= Alien(self)
+        alien_width=alien.rect.width
+        avilable_space_x= self.settings.width -(2*alien_width)
+        number_of_alian= avilable_space_x//(2*alien_width)
+
+        for alien in range(number_of_alian+4):
+            new_alien= Alien(self)
+            new_alien.rect.x= alien_width+2 *alien_width *alien
+            self.alien.add(new_alien)
+            print(new_alien)
 
 if __name__ == '__main__':
     A= Game()

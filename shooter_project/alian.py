@@ -1,7 +1,7 @@
 import pygame as pygame
 import random as random
-image_1 =pygame.transform.scale(pygame.image.load("Image/ship2.png"),(80,80))
-image_2 = pygame.transform.scale(pygame.image.load("Image/ship1.png"),(80,80))
+image_1 =pygame.transform.scale(pygame.image.load("Image/ship2.png"),(50,50))
+image_2 = pygame.transform.scale(pygame.image.load("Image/ship1.png"),(50,50))
 
 
 
@@ -17,7 +17,7 @@ class Alien(pygame.sprite.Sprite):
 
     def draw_alian(self):
 
-        pass
+        pygame.draw.rect(self.screen, self.color, self.rect)
 
     def move_alian(self):
         pass
