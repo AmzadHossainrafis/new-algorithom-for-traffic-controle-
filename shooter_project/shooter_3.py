@@ -152,6 +152,7 @@ class Game():
 
  
 
+#chak move metnt 
 
     def chk_fleet_edgs(self):
         for alien in self.alien.sprites():
