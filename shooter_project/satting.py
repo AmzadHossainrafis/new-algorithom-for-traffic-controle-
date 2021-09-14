@@ -13,7 +13,7 @@ class Settings():
         #bullet 
         self.bullet_height= 20
         self.bullet_width = 10
-        self.bullet_spreed = 3
+        self.bullet_spreed = 4
         self.bullet_holder =[]
         self.bullet_limit= 4
         self.alien_spreed = 1

@@ -96,8 +96,9 @@ class Game():
         self.bullets.update()  
         for Bullet in self.bullets.copy():
             if Bullet.rect.bottom < 0 :
-                self.bullets.remove(Bullet)   
-        collisions= pygame.sprite.groupcollide(self.bullets,self.alien,True,True)
+                self.bullets.remove(Bullet) 
+        self.collision_and_new_alian()  
+       
          
 
     def key_up(self,event):
@@ -166,7 +167,12 @@ class Game():
         for alien in self.alien.sprites():
             alien.rect.y +=self.settings.fleet_drop
         self.settings.fleet_direction *=-1
-
+    
+    def collision_and_new_alian(self):
+        collisions = pygame.sprite.groupcollide(self.bullets,self.alien,True,True)
+        if not self.alien:
+            self.bullets.empty()
+            self.create_fleet()
 if __name__ == '__main__':
     A= Game()
     A.main()
