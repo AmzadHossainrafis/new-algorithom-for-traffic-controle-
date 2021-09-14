@@ -16,7 +16,7 @@ class Settings():
         self.bullet_spreed = 3
         self.bullet_holder =[]
         self.bullet_limit= 4
-        self.alien_spreed = 1.0
+        self.alien_spreed = 1
         self.fleet_direction = 1
         self.fleet_drop= 10
         # self.display = "Alian invator "

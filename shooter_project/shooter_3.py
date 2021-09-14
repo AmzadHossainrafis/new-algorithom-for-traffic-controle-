@@ -136,7 +136,7 @@ class Game():
             for alien in range(number_of_alian+4):
                 self.row(alien,alien_width,row_number)
             
-            # print(new_alien)
+            
     def row(self,alien,alien_width,row_number):
         new_alien= Alien(self)
         alien_width , alien_height=new_alien.rect.size
@@ -146,9 +146,24 @@ class Game():
 
        
     def update_alien(self):
-        
+        self.chk_fleet_edgs()
         self.alien.update()
 
+
+ 
+
+
+    def chk_fleet_edgs(self):
+        for alien in self.alien.sprites():
+            if alien.chack_edgs():
+                self.change_direction()
+                break
+
+
+    def change_direction(self):
+        for alien in self.alien.sprites():
+            alien.rect.y +=self.settings.fleet_drop
+        self.settings.fleet_direction *=-1
 
 if __name__ == '__main__':
     A= Game()

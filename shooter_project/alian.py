@@ -21,4 +21,8 @@ class Alien(pygame.sprite.Sprite):
         pygame.draw.rect(self.screen, self.color, self.rect)
 
     def update(self):
-        self.rect.x+= self.settings.alien_spreed 
+        self.rect.x+= (self.settings.alien_spreed * self.settings.fleet_direction )
+    def chack_edgs(self):
+        self.screen_a=self.screen.get_rect()
+        if self.rect.right >= self.screen_a.right or self.rect.left < 0 :
+            return True
