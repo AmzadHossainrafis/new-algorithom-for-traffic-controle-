@@ -97,6 +97,7 @@ class Game():
         for Bullet in self.bullets.copy():
             if Bullet.rect.bottom < 0 :
                 self.bullets.remove(Bullet)   
+        collisions= pygame.sprite.groupcollide(self.bullets,self.alien,True,True)
          
 
     def key_up(self,event):
