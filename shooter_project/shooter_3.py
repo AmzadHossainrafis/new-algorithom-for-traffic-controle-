@@ -50,6 +50,8 @@ class Game():
             self.ship.ship_move()  
             # bullet create and remove 
             self.update_bullets()
+            self.update_alien()
+            
             #update the display 
             self._update_display()
             #control the frame rate        
@@ -60,7 +62,7 @@ class Game():
     def _update_display(self):
         #fill the display 
         self.screen.fill(self.settings.black)
-        #draw ship
+        #draw ship  
         self.ship.blit_me()
         # display all the  bullet in sprites group 
         for bullet in self.bullets.sprites():
@@ -141,7 +143,12 @@ class Game():
         new_alien.rect.x= alien_width+2 *alien_width *alien
         new_alien.rect.y= new_alien.rect.height + 2*alien_height* row_number
         self.alien.add(new_alien)
-            
+
+       
+    def update_alien(self):
+        
+        self.alien.update()
+
 
 if __name__ == '__main__':
     A= Game()

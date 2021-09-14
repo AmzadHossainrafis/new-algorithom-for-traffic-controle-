@@ -9,6 +9,7 @@ class Alien(pygame.sprite.Sprite):
     def __init__(self,ai_game):
         super().__init__()
         self.screen = ai_game.screen
+        self.settings= ai_game.settings
         self.image =random.choice([image_1,image_2])
         self.rect=self.image.get_rect()
         self.rect.x= self.rect.width
@@ -19,5 +20,5 @@ class Alien(pygame.sprite.Sprite):
 
         pygame.draw.rect(self.screen, self.color, self.rect)
 
-    def move_alian(self):
-        pass
+    def update(self):
+        self.rect.x+= self.settings.alien_spreed 
