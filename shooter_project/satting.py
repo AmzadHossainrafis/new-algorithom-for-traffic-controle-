@@ -10,9 +10,10 @@ class Settings():
         self.ship_height = 120
         self.ship_width = 120
         self.ship_spreed= 2
+        self.ship_limit = 3 
         #bullet 
         self.bullet_height= 20
-        self.bullet_width = 10
+        self.bullet_width = 500
         self.bullet_spreed = 4
         self.bullet_holder =[]
         self.bullet_limit= 4

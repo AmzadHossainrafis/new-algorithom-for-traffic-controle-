@@ -12,21 +12,22 @@ class Ship():
         self.screen=ai_game.screen
         self.screen_rect= self.screen.get_rect()
         self.image=pygame.transform.scale(pygame.image.load("Image/spacex.png"),(self.settings.ship_height,self.settings.ship_width))
-        self.image_rect= self.image.get_rect()
-        self.image_rect.midbottom= self.screen_rect.midbottom 
+        self.rect= self.image.get_rect()
+        self.rect.midbottom= self.screen_rect.midbottom 
         self.right= False
         self.left=False
 
     def blit_me(self):
-        self.screen.blit(self.image,self.image_rect)
+        self.screen.blit(self.image,self.rect)
 
 
     def ship_move(self):
-        if self.right and self.image_rect.x > 0:
-            self.image_rect.x +=self.settings.ship_spreed
-        elif self.left and self.image_rect.x <  self.image_rect.right :
-            self.image_rect.x -=self.settings.ship_spreed
-        
+        if self.right and self.rect.x > 0:
+            self.rect.x +=self.settings.ship_spreed
+        elif self.left and self.rect.x <  self.rect.right :
+            self.rect.x -=self.settings.ship_spreed
+    def center_ship(self):
+        self.rect.midbottom=self.screen_rect.midbottom
 
         
 

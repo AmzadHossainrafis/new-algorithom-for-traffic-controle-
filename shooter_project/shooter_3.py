@@ -12,8 +12,10 @@ id : 1530530o42
 # import math as math     #for math calculation 
 import sys, argparse    #argparse 
 import pygame as pygame # main game module 
-import random           #random module 
+import random   
+from time import sleep         #random module 
 from pygame import mixer #mixer for music 
+
 pygame.font.init()
 pygame.mixer.init() 
 pygame.init()
@@ -24,6 +26,7 @@ from satting import Settings
 from ship import Ship
 from bullets import Bullet 
 from alian import Alien
+from game_stats import GameState
 
 
 
@@ -37,6 +40,7 @@ class Game():
         pygame.display.set_caption("Alian invator")
         #allow to acces screen right lefe top and bollom etc
         self.ship= Ship(self)
+        self.stats = GameState(self)
         self.bullets= pygame.sprite.Group()
         self.alien= pygame.sprite.Group()
         self.create_fleet()
@@ -130,7 +134,7 @@ class Game():
         alien_width , alien_height=alien.rect.size
         avilable_space_x= self.settings.width -(2*alien_width)
         number_of_alian= avilable_space_x//(2*alien_width)
-        Ship_height= self.ship.image_rect.height
+        Ship_height= self.ship.rect.height
         avilable_space_y = self.settings.height - (3* alien_height)- Ship_height
         number_row= avilable_space_y //(2*alien_height)
         
@@ -150,7 +154,9 @@ class Game():
     def update_alien(self):
         self.chk_fleet_edgs()
         self.alien.update()
-
+        if pygame.sprite.spritecollideany(self.ship,self.alien):
+            self.ship_hit()
+  
 
  
 
@@ -173,6 +179,17 @@ class Game():
         if not self.alien:
             self.bullets.empty()
             self.create_fleet()
+
+    def ship_hit(self):
+        self.stats.ship_left -= 1
+        self.alien.empty()
+        self.bullets.empty()
+        self.create_fleet()
+        self.ship.center_ship()
+
+        sleep(0.5)
+    
+
 if __name__ == '__main__':
     A= Game()
     A.main()
