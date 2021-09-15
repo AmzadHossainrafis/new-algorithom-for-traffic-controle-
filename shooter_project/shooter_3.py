@@ -38,6 +38,7 @@ class Game():
         self.settings = Settings() #creat a instance of Settings class 
         self.screen = pygame.display.set_mode((self.settings.height,self.settings.width))
         pygame.display.set_caption("Alian invator")
+        self.rect=self.screen.get_rect()
         #allow to acces screen right lefe top and bollom etc
         self.ship= Ship(self)
         self.stats = GameState(self)
@@ -48,15 +49,17 @@ class Game():
         #main while loop
         
         while True: 
+
+            if self.stats.game_active:
             #chack event 
-            self._event()
-            #ship movement 
-            self.ship.ship_move()  
-            # bullet create and remove 
-            self.update_bullets()
-            self.update_alien()
-            
-            #update the display 
+                self._event()
+                #ship movement 
+                self.ship.ship_move()  
+                # bullet create and remove 
+                self.update_bullets()
+                self.update_alien()
+                
+                #update the display 
             self._update_display()
             #control the frame rate        
             clock.tick(60)
@@ -156,6 +159,8 @@ class Game():
         self.alien.update()
         if pygame.sprite.spritecollideany(self.ship,self.alien):
             self.ship_hit()
+        self.chack_alian_bottom()
+        
   
 
  
@@ -181,13 +186,26 @@ class Game():
             self.create_fleet()
 
     def ship_hit(self):
-        self.stats.ship_left -= 1
-        self.alien.empty()
-        self.bullets.empty()
-        self.create_fleet()
-        self.ship.center_ship()
 
-        sleep(0.5)
+        if self.settings.ship_limit > 0:
+            self.stats.ship_left -= 1
+            self.alien.empty()
+            self.bullets.empty()
+            self.create_fleet()
+            self.ship.center_ship()
+            
+            sleep(0.5)
+        else:
+            self.stats.game_active = False
+
+
+    def chack_alian_bottom(self):
+        for alien in self.alien.sprites():
+
+            if alien.rect.bottom > self.rect.bottom:
+                self.ship_hit()
+                break
+
     
 
 if __name__ == '__main__':
