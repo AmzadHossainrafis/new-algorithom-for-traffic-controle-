@@ -236,17 +236,21 @@ class Game():
             explosion.play()
             self.stats.score +=self.settings.alian_point
             self.scoreboard._prep_score()
+            self.scoreboard._prep_ships()
         if not self.alien:
             self.bullets.empty()
             self.create_fleet()
             self.settings.level_up()
+            
         
 
     def ship_hit(self):
         """ handel ship hit  with alian  reduce life of the ship , reduce the ship """
 
         if self.settings.ship_limit > 0:
-            self.stats.ship_left -= 1
+            self.settings.ship_limit -= 1
+            self.scoreboard._prep_ships()
+
             self.alien.empty()
             self.bullets.empty()
             self.create_fleet()

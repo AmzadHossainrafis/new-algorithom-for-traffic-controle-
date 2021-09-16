@@ -14,7 +14,7 @@ class Settings():
         self.bullet_height= 20
         self.bullet_width = 10
         self.bullet_holder =[]
-        self.fleet_drop= 10
+        self.fleet_drop= 100
         #botton 
         self.botton_width= 200
         self.botton_height= 50 

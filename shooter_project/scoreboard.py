@@ -34,10 +34,10 @@ class Scoreboard():
 
     def _prep_ships(self):
         self.ships= Group()
-        for ships_num in range(3):
+        for ships_num in range(self.settings.ship_limit):
             ship= Ship(self.ai_game)
-            ship.rect.x =10 +ships_num * ship.rect.width
-            ship.rect.y = 10 
+            ship.rect.x =5+ships_num * ship.rect.width
+            ship.rect.y = 1
             self.ships.add(ship)
 
 
