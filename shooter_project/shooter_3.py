@@ -28,6 +28,7 @@ from bullets import Bullet
 from alian import Alien
 from game_stats import GameState
 from button import Button
+from scoreboard import Scoreboard
 
 
 
@@ -44,6 +45,7 @@ class Game():
         #allow to acces screen right lefe top and bollom etc
         self.ship= Ship(self)
         self.stats = GameState(self)
+        self.scoreboard=Scoreboard(self)
         self.bullets= pygame.sprite.Group()
         self.alien= pygame.sprite.Group()
         self.play_button =Button(self,"play")
@@ -63,7 +65,7 @@ class Game():
                 
                 #update the display 
                 self._update_display()
-            #control the frame rate        
+                #control the frame rate        
                 clock.tick(60)
 
         
@@ -77,10 +79,12 @@ class Game():
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
         self.alien.draw(self.screen)
+        self.scoreboard.show_score()
+
 
         if not self.stats.game_active:
             self.play_button.draw_botton()
-
+            
            
         pygame.display.flip()
 
