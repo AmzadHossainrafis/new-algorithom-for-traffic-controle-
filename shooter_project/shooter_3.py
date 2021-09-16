@@ -7,6 +7,11 @@ e-mail: amzad.rafi@northsouth.edu
 id : 1530530o42
 
 """
+
+
+
+
+
 #import 
 
 # import math as math     #for math calculation 
@@ -35,6 +40,8 @@ from scoreboard import Scoreboard
 
 
 
+
+
 class Game():
     '''this is the main game class this class handel the '''
     def __init__(self):
@@ -42,6 +49,10 @@ class Game():
         self.screen = pygame.display.set_mode((self.settings.height,self.settings.width))
         pygame.display.set_caption("Alian invator")
         self.rect=self.screen.get_rect()
+        self.background_music=mixer.music.load("music/background.wav")
+
+        # self.fire_music=mixer.music.load("music/background.wav")
+
         #allow to acces screen right lefe top and bollom etc
         self.ship= Ship(self)
         self.stats = GameState(self)
@@ -52,7 +63,7 @@ class Game():
         self.create_fleet()
     def main(self):
         #main while loop
-        
+        mixer.music.play(-1)
         while True: 
 
             
@@ -155,6 +166,8 @@ class Game():
         """this function handle bullet movement and maintain bullet limite """
         if event.key== pygame.K_SPACE:
             if len(self.bullets) < self.settings.bullet_limit :
+                fire=mixer.Sound("music/gun_sound_1.mp3")
+                fire.play()
                 new_bullets= Bullet(self)
                 self.bullets.add(new_bullets)
 
@@ -217,10 +230,17 @@ class Game():
     
     def collision_and_new_alian(self):
         collisions = pygame.sprite.groupcollide(self.bullets,self.alien,True,True)
+        
+        if collisions:
+            explosion=mixer.Sound("music/gun_sound_2.mp3")
+            explosion.play()
+            self.stats.score +=self.settings.alian_point
+            self.scoreboard._prep_score()
         if not self.alien:
             self.bullets.empty()
             self.create_fleet()
             self.settings.level_up()
+        
 
     def ship_hit(self):
         """ handel ship hit  with alian  reduce life of the ship , reduce the ship """

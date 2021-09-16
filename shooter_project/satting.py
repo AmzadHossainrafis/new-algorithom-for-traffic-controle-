@@ -12,7 +12,7 @@ class Settings():
         self.ship_limit = 3 
         #bullet 
         self.bullet_height= 20
-        self.bullet_width = 500
+        self.bullet_width = 10
         self.bullet_holder =[]
         self.fleet_drop= 10
         #botton 
@@ -22,6 +22,7 @@ class Settings():
         self.botton_textc =(255,255,255)
         self.bullet_limit= 4
         self.spree_up = 1
+        self.alian_point = 50
 
         self.initialize_dynamic_setting()
 
