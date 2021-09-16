@@ -1,13 +1,16 @@
 import pygame as pygame
 from satting import Settings 
 
-class Ship():
+
+
+class Ship(pygame.sprite.Sprite):
     """
     Ship class that hold the atribute of  ship and it's activaties 
     
     """
 
     def __init__(self,ai_game):
+        super().__init__()
         self.settings=Settings()
         self.screen=ai_game.screen
         self.screen_rect= self.screen.get_rect()

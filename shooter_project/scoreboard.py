@@ -1,4 +1,7 @@
 import pygame.font
+from pygame.sprite import  Group
+from ship import Ship
+
 
 class Scoreboard():
     def __init__(self,ai_game):
@@ -8,6 +11,7 @@ class Scoreboard():
         self.text_color= (250,0,0)
         self.font=pygame.font.SysFont(None,48)
         self.state=ai_game.stats
+        self.ai_game=ai_game
 
 
         # self.rect=pygame.Rect(0,0, self.width ,self.height)
@@ -18,6 +22,8 @@ class Scoreboard():
         # self.width= self.settings.botton_width
 
         self._prep_score()
+        self._prep_ships()
+
     
     def _prep_score(self):
         score_str = str(self.state.score)
@@ -26,6 +32,20 @@ class Scoreboard():
         self.sc_rect.right= self.screen_rect.right -20
         self.sc_rect.top=10
 
+    def _prep_ships(self):
+        self.ships= Group()
+        for ships_num in range(3):
+            ship= Ship(self.ai_game)
+            ship.rect.x =10 +ships_num * ship.rect.width
+            ship.rect.y = 10 
+            self.ships.add(ship)
+
+
+
+
     def show_score(self):
         self.screen.blit(self.score_image,self.sc_rect)
+        self.ships.draw(self.screen)
+
+
 
