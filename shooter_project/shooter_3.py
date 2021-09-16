@@ -27,6 +27,7 @@ from ship import Ship
 from bullets import Bullet 
 from alian import Alien
 from game_stats import GameState
+from button import Button
 
 
 
@@ -34,6 +35,7 @@ from game_stats import GameState
 
 
 class Game():
+    '''this is the main game class this class handel the '''
     def __init__(self):
         self.settings = Settings() #creat a instance of Settings class 
         self.screen = pygame.display.set_mode((self.settings.height,self.settings.width))
@@ -44,27 +46,27 @@ class Game():
         self.stats = GameState(self)
         self.bullets= pygame.sprite.Group()
         self.alien= pygame.sprite.Group()
+        self.play_button =Button(self,"play")
         self.create_fleet()
     def main(self):
         #main while loop
         
         while True: 
 
-            if self.stats.game_active:
-            #chack event 
+            
+            
+
                 self._event()
-                #ship movement 
-                self.ship.ship_move()  
-                # bullet create and remove 
+                self.ship.ship_move()   
                 self.update_bullets()
                 self.update_alien()
                 
                 #update the display 
-            self._update_display()
+                self._update_display()
             #control the frame rate        
-            clock.tick(60)
+                clock.tick(60)
 
-            
+        
     #update the display 
     def _update_display(self):
         #fill the display 
@@ -76,11 +78,19 @@ class Game():
             bullet.draw_bullet()
         self.alien.draw(self.screen)
 
+        if not self.stats.game_active:
+            self.play_button.draw_botton()
+
            
         pygame.display.flip()
 
     #chak event
     def _event(self):
+        '''
+        this fucntion chack any kind of event like key pressed or key up and 
+        depanding on the event type it's run functions 
+        '''
+
         #collect all the event in a list 
         for event in pygame.event.get():
             #chack if game is cross or not 
@@ -95,10 +105,20 @@ class Game():
 
             elif event.type == pygame.KEYUP:
                 self.key_up(event)
+            
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos =pygame.mouse.get_pos()
+                self.click_play(mouse_pos)
+
 
             
                 
     def update_bullets(self) :
+        '''
+        chack the bullet activaties like move it and if it hit the top of the screen 
+        then remove the bullet ,chack the it cullidite with the  buttom  
+        
+        '''
 
         self.bullets.update()  
         for Bullet in self.bullets.copy():
@@ -109,6 +129,7 @@ class Game():
          
 
     def key_up(self,event):
+        """ chack the key up event """
         if event.key == pygame.K_a:
             self.ship.left=False
 
@@ -119,6 +140,7 @@ class Game():
 
 
     def key_down(self,event) : 
+        """ chack the key down event"""
         if event.key == pygame.K_a:
             self.ship.left=True
 
@@ -126,6 +148,7 @@ class Game():
             self.ship.right=True
 
     def fire_bullets(self,event):
+        """this function handle bullet movement and maintain bullet limite """
         if event.key== pygame.K_SPACE:
             if len(self.bullets) < self.settings.bullet_limit :
                 new_bullets= Bullet(self)
@@ -133,6 +156,14 @@ class Game():
 
 
     def create_fleet(self):
+        """ create alian fleet and chack the cullsion adjust the alian positon
+        create row and collom of the alian 
+        
+        
+        """
+
+
+
         alien= Alien(self)
         alien_width , alien_height=alien.rect.size
         avilable_space_x= self.settings.width -(2*alien_width)
@@ -147,6 +178,7 @@ class Game():
             
             
     def row(self,alien,alien_width,row_number):
+        '''create a row of alian '''
         new_alien= Alien(self)
         alien_width , alien_height=new_alien.rect.size
         new_alien.rect.x= alien_width+2 *alien_width *alien
@@ -186,6 +218,7 @@ class Game():
             self.create_fleet()
 
     def ship_hit(self):
+        """ handel ship hit  with alian  reduce life of the ship , reduce the ship """
 
         if self.settings.ship_limit > 0:
             self.stats.ship_left -= 1
@@ -197,15 +230,30 @@ class Game():
             sleep(0.5)
         else:
             self.stats.game_active = False
+            pygame.mouse.set_visible(True)
 
 
     def chack_alian_bottom(self):
         for alien in self.alien.sprites():
-
             if alien.rect.bottom > self.rect.bottom:
                 self.ship_hit()
                 break
 
+
+
+    def click_play(self,mouse_pos):
+        botton_clicked = self.play_button.rect.collidepoint(mouse_pos)
+        if botton_clicked and self.play_button.rect.collidepoint(mouse_pos):
+            pygame.mouse.set_visible(False)
+            self.stats.reset_state()
+            self.stats.game_active= True
+            self.alien.empty()
+            self.bullets.empty()
+            self.create_fleet()
+            self.ship.center_ship()
+
+
+            
     
 
 if __name__ == '__main__':
