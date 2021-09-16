@@ -216,6 +216,7 @@ class Game():
         if not self.alien:
             self.bullets.empty()
             self.create_fleet()
+            self.settings.level_up()
 
     def ship_hit(self):
         """ handel ship hit  with alian  reduce life of the ship , reduce the ship """
@@ -245,6 +246,7 @@ class Game():
         botton_clicked = self.play_button.rect.collidepoint(mouse_pos)
         if botton_clicked and self.play_button.rect.collidepoint(mouse_pos):
             pygame.mouse.set_visible(False)
+            self.settings.initialize_dynamic_setting()
             self.stats.reset_state()
             self.stats.game_active= True
             self.alien.empty()
