@@ -21,13 +21,16 @@ class Ship(pygame.sprite.Sprite):
         self.left = False
 
     def blit_me(self):
+        """drew the image in screen """
         self.screen.blit(self.image, self.rect)
 
     def ship_move(self):
+        """ship left and right movement and chking if the ship in the screen"""
         if self.right and self.rect.x > 0:
             self.rect.x += self.settings.ship_spreed
         elif self.left and self.rect.x < self.rect.right:
             self.rect.x -= self.settings.ship_spreed
 
     def center_ship(self):
+        """setting the position of the ship in the mid bottom of the screen """
         self.rect.midbottom = self.screen_rect.midbottom

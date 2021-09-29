@@ -3,6 +3,7 @@ import pygame as pygame
 
 
 class Bullet(pygame.sprite.Sprite):
+    """bullete class handel the activatice of bullters a line shooting and moving updating bullets in display"""
     def __init__(self, ai_game):
         super().__init__()
         self.screen = ai_game.screen

@@ -4,6 +4,7 @@ from ship import Ship
 
 
 class Scoreboard():
+    """display all the Score activaties like count the how many life left what is the totalt score """
     def __init__(self, ai_game):
         self.screen = ai_game.screen
         self.screen_rect = self.screen.get_rect()
@@ -13,17 +14,11 @@ class Scoreboard():
         self.state = ai_game.stats
         self.ai_game = ai_game
 
-        # self.rect=pygame.Rect(0,0, self.width ,self.height)
-
-        # self.botton_color= self.settings.botton_color
-        # self.rect.center=self.screen_rect.center
-        # self.height=self.settings.botton_height
-        # self.width= self.settings.botton_width
-
         self._prep_score()
         self._prep_ships()
 
     def _prep_score(self):
+        """this function handel the screen """
         score_str = str(self.state.score)
         self.score_image = self.font.render(
             score_str, True, self.text_color, self.settings.black)
@@ -32,6 +27,7 @@ class Scoreboard():
         self.sc_rect.top = 10
 
     def _prep_ships(self):
+        """this funtion display how many life left """
         self.ships = Group()
         for ships_num in range(self.settings.ship_limit):
             ship = Ship(self.ai_game)
@@ -40,5 +36,6 @@ class Scoreboard():
             self.ships.add(ship)
 
     def show_score(self):
+        """this function drow the  in the screen"""
         self.screen.blit(self.score_image, self.sc_rect)
         self.ships.draw(self.screen)

@@ -74,6 +74,10 @@ class Game():
     # update the display
 
     def _update_display(self):
+        """
+        upload the dispaly and its realavent activaties
+        draw the bullete and scoreboard  
+        """
         # fill the display
         self.screen.fill(self.settings.black)
         # draw ship
