@@ -3,7 +3,7 @@
 this is a simple university project based on university courese . the main reason of this project to represent the basic ideas of python proramming and 
 also getting familier with some python module(pygame) 
 
-#requairment 
+# requairment 
  pygame :- pip install pygame 
  
 # run 
