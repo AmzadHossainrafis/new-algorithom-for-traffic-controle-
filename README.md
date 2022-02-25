@@ -18,5 +18,4 @@ also getting familier with some python module(pygame)
  
  all kinds of game dynamic can be changed in satting.py( config file ) like game spreed , bullet timing , all kind of size and weidth 
  
- 
-![This is an image](https://myoctocat.com/assets/images/base-octocat.svg)
+<p align="right"><img src="pygame .png"\></p>
