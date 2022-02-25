@@ -4,7 +4,7 @@ This is a straightforward university assignment based on undergraduate courses. 
 
 # Game Look  
 
-<p align="right"><img src="pygame .png"\></p>
+<p align="right"><img src="gamelook.png"\></p>
 
 # Game preview 
 
